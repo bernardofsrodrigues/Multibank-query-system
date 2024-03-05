@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<?php
+  $title = "Obter Clientes";
+  include 'header.php';
+?>
+<style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 150px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+    #sidebar {
+      position: fixed;
+    }
+    @media only screen and (max-width: 991px) {
+      #sidebar {
+        position: absolute;
+      }
+    }
+    /*
+    #tabelaConsignacoes,
+    #tabelaServidores {
+      display: none;
+    }
+    */
+  </style>
+        <main class="container" style="margin-bottom: 4%;">
+          <div class="bg-trasparent p-5 rounded" style="margin-top: 5%; border-radius: 10px; box-shadow: 0 5px 8px 8px rgba(0,0,0,0.1);">
+              <form>
+                  <input type="hidden" name="csrfmiddlewaretoken" value="PYKAeZJbQhWukmnGcO3yRRMKugXyJ6aQ919gubRW9PNy38kzgmS3i2uG4Sz8sVVY">
+                  <div class="row" class="formulariocel">
+                      <div class="col-sm-7" style="display: flex; align-items: baseline;" id="teste">
+                        <label style="width: 50%; margin-right: 2%;">Informe o CPF para consulta:</label>
+                          <input type="text" class="form-control" id="cpf" placeholder="CPF" name="cpf">
+                      </div>
+                      <div class="col">
+                          <button style="padding: 2%;" type="button" id="consulta" onclick="getExtrato()" class="btn btn-primary">Consultar</button>
+                      </div>
+                      <div id="naoencontrado" class="col-sm-12 d-none text-center" style="padding-top:35px;">
+                         <h2 class="text-center"> Cliente não encontrado</h2>
+                      </div>
+                    </div>
+                  
+              </form>
+          </div>
+          <br><br>
+          <div class="alert alert-danger d-none" role="alert" id="errorr">
+            <span>CPF não encontrado.</span>
+          </div>
+
+<div id="resposta" style="display: none">
+
+  <div class="dtsp-panesContainer" style=" display: none;"> <!--D-NONE PARA REUNIÃO -->
+  <div class="dtsp-titleRow">
+    <div class="dtsp-title">Filters Active - 0</div><button type="button" class="dtsp-clearAll">Clear All</button>
+  </div>
+  <div class="dtsp-searchPanes">
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3">
+                    <div class="dtsp-topRow dtsp-subRowsContainer">
+                      <div class="dtsp-subRow1">
+                        <div class="dtsp-searchCont"><input class="dtsp-paneInputButton dtsp-search" placeholder="Situação">
+                          <div class="dtsp-searchButtonCont"><button type="button" class="dtsp-searchIcon dtsp-paneButton"></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dtsp-subRow2">
+                        <div class="dtsp-buttonGroup"><button type="button"
+                            class="dtsp-dull dtsp-paneButton clearButton">×</button><button type="button"
+                            class="dtsp-paneButton dtsp-nameButton"></button><button type="button"
+                            class="dtsp-paneButton dtsp-countButton"></button></div>
+                      </div>
+                    </div>
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                      <div class="dataTables_scroll">
+                        <div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;">
+                          <div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 299px; padding-right: 0px;">
+                            <table class="dataTable no-footer" role="grid" style="margin-left: 0px; width: 299px;">
+                              <thead>
+                                <tr role="row">
+                                  <th class="dtsp-nameColumn sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 277px;" aria-label=": activate to sort column descending"
+                                    aria-sort="ascending"></th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="dataTables_scrollBody"
+                          style="position: relative; overflow: auto; max-height: 200px; height: 200px; width: 100%;">
+                          <table id="DataTables_Table_0" class="dataTable no-footer" role="grid" style="width: 100%;">
+                            <thead>
+                              <tr role="row" style="height: 0px;">
+                                <th class="dtsp-nameColumn sorting sorting_asc" aria-controls="DataTables_Table_0" rowspan="1"
+                                  colspan="1"
+                                  style="width: 277px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"
+                                  aria-label=": activate to sort column descending" aria-sort="ascending">
+                                  <div class="dataTables_sizing" style="height: 0px; overflow: hidden;"></div>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="odd">
+                                <td class="dtsp-nameColumn sorting_1">
+                                  <div class="dtsp-nameCont"><span title="Cancelada" class="dtsp-name">Cancelada</span><span
+                                      class="dtsp-pill">10</span></div>
+                                </td>
+                              </tr>
+                              <tr class="even">
+                                <td class="dtsp-nameColumn sorting_1">
+                                  <div class="dtsp-nameCont"><span title="Deferida" class="dtsp-name">Deferida</span><span
+                                      class="dtsp-pill">5</span></div>
+                                </td>
+                              </tr>
+                              <tr class="odd">
+                                <td class="dtsp-nameColumn sorting_1">
+                                  <div class="dtsp-nameCont"><span title="Liquidação (Transferido)" class="dtsp-name">Liquidação
+                                      (Transferido)</span><span class="dtsp-pill">9</span></div>
+                                </td>
+                              </tr>
+                              <tr class="even">
+                                <td class="dtsp-nameColumn sorting_1">
+                                  <div class="dtsp-nameCont"><span title="Quitada" class="dtsp-name">Quitada</span><span
+                                      class="dtsp-pill">27</span></div>
+                                </td>
+                              </tr>
+                              <tr class="odd">
+                                <td class="dtsp-nameColumn sorting_1">
+                                  <div class="dtsp-nameCont"><span title="Suspensa" class="dtsp-name">Suspensa</span><span
+                                      class="dtsp-pill">1</span></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
+                </div>
+              </div>
+              
+              <div id="tabelaServidores" class="tabelass">  
+                <div class="row mb-2">
+                          <div class="col-lg-12">
+                            <div class="card">
+                              <div class="card-body">
+                                <h5 class="card-title mb-4">Dados dos Servidores</h5>
+                                <div class="table-responsive">
+                                  <table class="table center-aligned-table">
+                              <thead>
+                                <tr style="color: blue;">
+                                  <th>Servidor</th>
+                                  <th>Matrícula</th>
+                                  <th>CPF</th>
+                                  <th>Serviço</th>
+                                  <th>Margem Disponível</th>
+                                  <th>Margem Total</th>
+                                </tr>
+                              </thead>
+                    <tbody>
+                      </tbody>
+                    </table>
+              
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+
+                
+              <br><br>   
+
+        <div id="filtros" class="bg-trasparent p-4 rounded" style="border-radius: 10px; box-shadow: 0 5px 8px 8px rgba(0,0,0,0.1); display: flex; align-items: baseline;">
+          <p style="margin-left: 1%; margin-right: 1%">Filtros: </p>
+        </div>
+
+        <br><br>
+
+            
+                <div id="tabelaConsignacoes" class="tabelass" style="width: 100%;" >  
+                  <div class="row mb-2">
+                            <div class="col-lg-12">
+                              <div class="card">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-4">Consignações</h5>
+                                  <div class="table-responsive">
+                                    <table class="table center-aligned-table">
+                                <thead>
+                                  <tr style="color: blue;">
+                      <th>Consignataria</th>
+                      <th>Situação</th>
+                      <th>Serviço</th>
+                      <th>ADE</th>
+                      <th>Qtd Prestações</th>
+                      <th>Prestações Pagas</th>
+                      <th>Valor Prestação</th>
+                      <th>Deferimento</th>
+                      <th>Quitação</th>
+                      <th>Último Desconto</th>
+                      <th>Última Parcela</th>
+                                  </tr>
+                                </thead>
+                      <tbody>
+                                      </tbody>
+                                    </table>
+                
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                  </div>
+          
+<!--
+
+                  <br><br>
+
+                  <table border="1">
+        <thead>
+            <tr>
+                <th>Processamento ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Erro</th>
+                <th>Status</th>
+                <th>Consignatárias</th>
+            </tr>
+        </thead>
+        <tbody id="dadosTabela">
+        
+      </tbody>
+    </table>  
+
+
+  -->
+</div>
+  </main>
+        <footer class="footer" style="position: fixed; bottom: 0; z-index: 1;">
+          <div class="container-fluid clearfix">
+            <span class="float-right">
+            </span>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
+  <script src="js/off-canvas.js"></script>
+  <script src="js/hoverable-collapse.js"></script>
+  <script src="js/misc.js"></script>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+  <script src="API's/login.js"></script>
+  <script src="API's/clientes/obter_clientes.js"></script>
+    <script src="API's/clientes/processamento_id.js"></script>
+
+  <script>
+
+    //while
+    
+        
+    function ChangeFiltro(){
+        console.log("ok")
+        
+        var selectVal = $("#filtro option:selected").val();
+        setFilter(selectVal);
+    }
+    function setFilter(filter){
+        var table = $('#table_situacao_dt').DataTable();
+        table.search( "" );
+        if(filter != 'Todas'){
+            table.search( filter );
+        }
+
+        table.draw();
+    }
+
+    function getSituacao(newData){
+        var table_situacao  = "<div class='searchPanes'></div><table id='table_situacao_dt' class='display nowrap compact'><thead><tr>";
+                    $.each(newData.situacao.titulos, function (i, titulos) {
+                        table_situacao =  table_situacao +"<th>"+ titulos +"</th>";
+                    })
+                    var situacao = [];
+                    table_situacao = table_situacao + "</tr></thead><tbody><tr>";
+                    $.each(newData.situacao.conteudo, function (i, conteudo) {
+                        $.each(conteudo, function (i, ctd) {
+                            if (i == 1){
+                                situacao.push(ctd);
+                            }
+                            table_situacao =  table_situacao +"<td>"+ ctd +"</td>";
+                        });
+                        table_situacao = table_situacao + "</tr>";
+                    });
+
+                    let _situacao = Array.from(new Set(situacao));
+                    var options = "";
+                    $.each(_situacao, function (i, ctd) {
+                            options += "<option value='"+ctd+"'>"+ctd+"</option>";
+                        });
+
+                    table_situacao = table_situacao + "</tbody></table>";
+                    // table_situacao 
+                    // = " <div class='row' style='margin-bottom: -10px;'><div class='col-sm-2 text-right'>Filtrar pela situação:</div><div class='col-sm-4'><select id='filtro' onchange='ChangeFiltro()' class='form-select form-select-sm filtro' aria-label='.form-select-sm example'>"+
+                    // "<option selected>Todas</option>"+
+                    // options+
+                    // "</select></div></div>" + table_situacao;
+
+        return table_situacao;
+    }
+    function ChangeFiltro(){
+        console.log("ok")
+        
+        var selectVal = $("#filtro option:selected").val();
+        setFilter(selectVal);
+    }
+    function setFilter(filter){
+        var table = $('#table_situacao_dt').DataTable();
+        table.search( "" );
+        if(filter != 'Todas'){
+            table.search( filter );
+        }
+
+        table.draw();
+    }
+
+    function getRetorno(newData){
+        var table_retorno  = "<table id='table_retorno_dt' class='display nowrap'><thead><tr>";
+            
+        $.each(newData.retorno.titulos, function (i, titulos) {
+            table_retorno =  table_retorno +"<th>"+ titulos +"</th>";
+        })
+        
+        table_retorno = table_retorno + "</tr></thead><tbody><tr>";
+            
+        $.each(newData.retorno.conteudo, function (i, conteudo) {
+            $.each(conteudo, function (i, ctd) {
+                table_retorno =  table_retorno +"<td>"+ ctd +"</td>";
+            });
+            table_retorno = table_retorno + "</tr>";
+        });
+
+        table_retorno = table_retorno + "</tbody></table>";
+        return table_retorno;
+    }
+    
+    function filtrarPorSituacao(situacao) {
+      const dadosString = JSON.parse(localStorage.getItem("dados"))
+      if(situacao == null){
+        function criarLinhasTabela(dadosFiltrados, tabelaId) {
+                    const tabela = document.getElementById(tabelaId);
+                    const tbody = tabela.querySelector('tbody');
+
+                    tbody.innerHTML = '';
+
+                    dadosFiltrados.forEach(item => {
+                      const linha = document.createElement('tr');
+
+                      Object.values(item).forEach(valor => {
+                        const coluna = document.createElement('td');
+                        coluna.textContent = valor;
+                        linha.appendChild(coluna);
+                      });
+
+                      tbody.appendChild(linha);
+                    });
+                  }
+      criarLinhasTabela(dadosString, 'tabelaConsignacoes');
+      }else{
+        const dadosFiltrados = dadosString.filter(item => item.situacao === situacao);
+      function criarLinhasTabela(dadosFiltrados, tabelaId) {
+                    const tabela = document.getElementById(tabelaId);
+                    const tbody = tabela.querySelector('tbody');
+
+                    tbody.innerHTML = '';
+
+                    dadosFiltrados.forEach(item => {
+                      const linha = document.createElement('tr');
+
+                      Object.values(item).forEach(valor => {
+                        const coluna = document.createElement('td');
+                        coluna.textContent = valor;
+                        linha.appendChild(coluna);
+                      });
+
+                      tbody.appendChild(linha);
+                    });
+                  }
+      criarLinhasTabela(dadosFiltrados, 'tabelaConsignacoes');
+      }
+    }
+    
+
+    function getExtrato() {
+        let tabelas = document.getElementsByClassName('tabelass');
+        let tabela_filtro = document.getElementById('resposta');
+
+
+
+        controlExibicao("Consultando");
+        $.ajax({
+                url: "http://consigconsult.us-east-1.elasticbeanstalk.com/api/extrato?cpf="+$( "#cpf" ).val().replace(/([^\d])+/gim, ''),
+                type: "GET",
+                success: function(dados){
+                  let errorr = document.getElementById('errorr');
+                  errorr.classList.add('d-none');
+
+                  console.log(dados);
+
+
+                  //filtro botoes
+                  const dados_local = JSON.stringify(dados.consignacoes)
+                  console.log(dados_local)
+                  localStorage.setItem("dados", dados_local);
+
+                  const situacoesUnicas = [...new Set(dados.consignacoes.map(item => item.situacao))];
+
+                  situacoesUnicas.forEach(situacao => {
+                    const button = document.createElement("button");
+                    button.textContent = situacao;
+                    button.className += "btn btn-primary";
+                    if (situacao === 'Cancelada') {
+                      button.className += 'btn btn-danger';
+                    }
+                    button.style.marginRight = "1.6%";
+                    button.addEventListener("click", () => filtrarPorSituacao(situacao));
+                    document.getElementById('filtros').appendChild(button);
+                  });
+
+                  const button = document.createElement("button");
+                    button.textContent = "Todos";
+                    button.className += "btn btn-success";
+                    button.addEventListener("click", () => filtrarPorSituacao(null));
+                    document.getElementById('filtros').appendChild(button);
+
+
+                  function criarLinhasTabela(dados, tabelaId) {
+                    tabela_filtro.style.display = 'block';
+                    const tabela = document.getElementById(tabelaId);
+                    const tbody = tabela.querySelector('tbody');
+
+                    tbody.innerHTML = '';
+
+                    dados.forEach(item => {
+                      const linha = document.createElement('tr');
+
+                      Object.values(item).forEach(valor => {
+                        const coluna = document.createElement('td');
+                        coluna.textContent = valor;
+                        linha.appendChild(coluna);
+                      });
+
+                      tbody.appendChild(linha);
+                    });
+                  }
+                  
+                   criarLinhasTabela(dados.dadosServidores, 'tabelaServidores');
+                   criarLinhasTabela(dados.consignacoes, 'tabelaConsignacoes');
+                   
+                   for (let i = 0; i < tabelas.length; i++) {
+                     tabelas[i].classList.remove('d-none');
+                    }
+                    
+                    controlExibicao(false);
+                    
+                  },
+                  error: function(error){
+                    let errorr = document.getElementById('errorr');
+                    setTimeout(() => {
+                      errorr.classList.remove('d-none');  
+                      console.log(error.status);
+                      console.log("error.status");
+                    }, 6000);
+                  
+                    
+                    if(error.status == 403){
+                      alert("Ops, Login multiplo identificado ou sessão expirada, favor logar novamente.");
+                      window.location.href = "login.html";
+                    } 
+                    controlExibicao(false);
+                  }
+            });
+    }
+    function controlExibicao(contains){
+        $('#consulta').removeClass("btn-secondary").attr("disabled", false).html("Consultar");
+        
+        if(contains == "Consultando"){
+            $('#consulta').addClass("btn-secondary").attr("disabled", true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Realizando consulta');
+            $('#naoencontrado').addClass("d-none");
+            $('#table_situacao').empty();
+            $('#table_retorno').empty();
+        }
+
+        else if(contains == false){
+        $('#consulta').removeClass("btn-secondary").attr("disabled", false).html("Consultar");
+           
+            
+        }
+    }
+</script>
+</body>
+
+</html>
