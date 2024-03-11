@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
 <?php
   $title = "Obter Clientes";
   include 'header.php';
@@ -9,7 +11,9 @@
     table {
       border-collapse: collapse;
       width: 100%;
+      min-width: 100%;
       margin-bottom: 150px;
+      padding: 10px;
     }
 
     table, th, td {
@@ -38,6 +42,19 @@
       display: none;
     }
     */
+    .pesquisa-div {
+            display: flex;
+            align-items: center;
+        }
+
+        .pesquisa-input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .pesquisa-button {
+            width: 100px;
+        }
   </style>
         <main class="container" style="margin-bottom: 4%;">
           <div class="bg-trasparent p-5 rounded" style="margin-top: 5%; border-radius: 10px; box-shadow: 0 5px 8px 8px rgba(0,0,0,0.1);">
@@ -63,107 +80,11 @@
             <span>CPF não encontrado.</span>
           </div>
 
-<div id="resposta" style="display: none">
+<div id="resposta" class="col-lg-16" style="display: none">
 
-  <div class="dtsp-panesContainer" style=" display: none;"> <!--D-NONE PARA REUNIÃO -->
-  <div class="dtsp-titleRow">
-    <div class="dtsp-title">Filters Active - 0</div><button type="button" class="dtsp-clearAll">Clear All</button>
-  </div>
-  <div class="dtsp-searchPanes">
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3">
-                    <div class="dtsp-topRow dtsp-subRowsContainer">
-                      <div class="dtsp-subRow1">
-                        <div class="dtsp-searchCont"><input class="dtsp-paneInputButton dtsp-search" placeholder="Situação">
-                          <div class="dtsp-searchButtonCont"><button type="button" class="dtsp-searchIcon dtsp-paneButton"></button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="dtsp-subRow2">
-                        <div class="dtsp-buttonGroup"><button type="button"
-                            class="dtsp-dull dtsp-paneButton clearButton">×</button><button type="button"
-                            class="dtsp-paneButton dtsp-nameButton"></button><button type="button"
-                            class="dtsp-paneButton dtsp-countButton"></button></div>
-                      </div>
-                    </div>
-                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                      <div class="dataTables_scroll">
-                        <div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;">
-                          <div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 299px; padding-right: 0px;">
-                            <table class="dataTable no-footer" role="grid" style="margin-left: 0px; width: 299px;">
-                              <thead>
-                                <tr role="row">
-                                  <th class="dtsp-nameColumn sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1" style="width: 277px;" aria-label=": activate to sort column descending"
-                                    aria-sort="ascending"></th>
-                                </tr>
-                              </thead>
-                            </table>
-                          </div>
-                        </div>
-                        <div class="dataTables_scrollBody"
-                          style="position: relative; overflow: auto; max-height: 200px; height: 200px; width: 100%;">
-                          <table id="DataTables_Table_0" class="dataTable no-footer" role="grid" style="width: 100%;">
-                            <thead>
-                              <tr role="row" style="height: 0px;">
-                                <th class="dtsp-nameColumn sorting sorting_asc" aria-controls="DataTables_Table_0" rowspan="1"
-                                  colspan="1"
-                                  style="width: 277px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"
-                                  aria-label=": activate to sort column descending" aria-sort="ascending">
-                                  <div class="dataTables_sizing" style="height: 0px; overflow: hidden;"></div>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="odd">
-                                <td class="dtsp-nameColumn sorting_1">
-                                  <div class="dtsp-nameCont"><span title="Cancelada" class="dtsp-name">Cancelada</span><span
-                                      class="dtsp-pill">10</span></div>
-                                </td>
-                              </tr>
-                              <tr class="even">
-                                <td class="dtsp-nameColumn sorting_1">
-                                  <div class="dtsp-nameCont"><span title="Deferida" class="dtsp-name">Deferida</span><span
-                                      class="dtsp-pill">5</span></div>
-                                </td>
-                              </tr>
-                              <tr class="odd">
-                                <td class="dtsp-nameColumn sorting_1">
-                                  <div class="dtsp-nameCont"><span title="Liquidação (Transferido)" class="dtsp-name">Liquidação
-                                      (Transferido)</span><span class="dtsp-pill">9</span></div>
-                                </td>
-                              </tr>
-                              <tr class="even">
-                                <td class="dtsp-nameColumn sorting_1">
-                                  <div class="dtsp-nameCont"><span title="Quitada" class="dtsp-name">Quitada</span><span
-                                      class="dtsp-pill">27</span></div>
-                                </td>
-                              </tr>
-                              <tr class="odd">
-                                <td class="dtsp-nameColumn sorting_1">
-                                  <div class="dtsp-nameCont"><span title="Suspensa" class="dtsp-name">Suspensa</span><span
-                                      class="dtsp-pill">1</span></div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                  <div class="dtsp-searchPane dtsp-columns-3 dtsp-hidden"></div>
-                </div>
-              </div>
+  
               
-              <div id="tabelaServidores" class="tabelass">  
+              <div id="tabelaServidores" class="tabelass col-lg-16">  
                 <div class="row mb-2">
                           <div class="col-lg-12">
                             <div class="card">
@@ -196,45 +117,48 @@
               <br><br>   
 
         <div id="filtros" class="bg-trasparent p-4 rounded" style="border-radius: 10px; box-shadow: 0 5px 8px 8px rgba(0,0,0,0.1); display: flex; align-items: baseline;">
-          <p style="margin-left: 1%; margin-right: 1%">Filtros: </p>
         </div>
 
         <br><br>
 
             
-                <div id="tabelaConsignacoes" class="tabelass" style="width: 100%;" >  
-                  <div class="row mb-2">
-                            <div class="col-lg-12">
-                              <div class="card">
-                                <div class="card-body">
-                                  <h5 class="card-title mb-4">Consignações</h5>
-                                  <div class="table-responsive">
-                                    <table class="table center-aligned-table">
-                                <thead>
-                                  <tr style="color: blue;">
-                      <th>Consignataria</th>
-                      <th>Situação</th>
-                      <th>Serviço</th>
-                      <th>ADE</th>
-                      <th>Qtd Prestações</th>
-                      <th>Prestações Pagas</th>
-                      <th>Valor Prestação</th>
-                      <th>Deferimento</th>
-                      <th>Quitação</th>
-                      <th>Último Desconto</th>
-                      <th>Última Parcela</th>
-                                  </tr>
-                                </thead>
-                      <tbody>
-                                      </tbody>
-                                    </table>
-                
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                  </div>
+<div id="tabelaConsignacoes" class="tabelass col-lg-16">
+    <div class="row mb-2">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Consignações</h5>
+                    <div class="table-responsive">
+
+                    <div class="col-sm-4 pesquisa-div mb-3 float-right">
+                        <input type="text" id="termoPesquisa" class="form-control pesquisa-input" placeholder="Digite sua pesquisa..." onkeyup="pesquisar()">
+                    </div>                        
+
+                        <table class="table center-aligned-table tabelaConsignacoes mt-2">
+                            <thead>
+                                <tr style="color: blue;">
+                                    <th colspan="1">Consignataria</th>
+                                    <th colspan="1">Situação</th>
+                                    <th colspan="1">Serviço</th>
+                                    <th colspan="1">ADE</th>
+                                    <th colspan="1">Quant.<br>Prestações</th>
+                                    <th colspan="1">Prest.<br>Pagas</th>
+                                    <th colspan="1">Valor<br>Prest.</th>
+                                    <th colspan="1">Deferimento</th>
+                                    <th colspan="1">Quitação</th>
+                                    <th colspan="1">Último<br>Desconto</th>
+                                    <th colspan="1">Última<br>Parcela</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
           
 <!--
 
@@ -263,14 +187,16 @@
         <footer class="footer" style="position: fixed; bottom: 0; z-index: 1;">
           <div class="container-fluid clearfix">
             <span class="float-right">
+              <a href="#"></a>
             </span>
           </div>
         </footer>
 
+        <!-- partial -->
       </div>
     </div>
   </div>
-
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -279,11 +205,11 @@
   <script src="js/hoverable-collapse.js"></script>
   <script src="js/misc.js"></script>
 
-
   <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
   <script src="API's/login.js"></script>
@@ -292,9 +218,23 @@
 
   <script>
 
-    //while
-    
-        
+    function pesquisar() {
+      var termoPesquisa = $("#termoPesquisa").val().toUpperCase(); 
+      var linhasTabela = document.querySelectorAll("#tabelaConsignacoes tbody tr");
+
+      linhasTabela.forEach(function(linha) {
+          var textoLinha = linha.textContent.toUpperCase();
+          if (textoLinha.includes(termoPesquisa)) {
+              linha.style.display = ""; 
+          } else {
+              linha.style.display = "none"; 
+          }
+      });
+    }
+
+
+
+    var tipo = true;
     function ChangeFiltro(){
         console.log("ok")
         
@@ -349,6 +289,14 @@
         var selectVal = $("#filtro option:selected").val();
         setFilter(selectVal);
     }
+    
+    function limparTabelas() {
+    const tabelas = document.querySelectorAll('.tabelass table tbody');
+    tabelas.forEach(tabela => {
+        tabela.innerHTML = '';
+    });
+}
+
     function setFilter(filter){
         var table = $('#table_situacao_dt').DataTable();
         table.search( "" );
@@ -403,6 +351,7 @@
       criarLinhasTabela(dadosString, 'tabelaConsignacoes');
       }else{
         const dadosFiltrados = dadosString.filter(item => item.situacao === situacao);
+      // Aqui você pode fazer algo mais com os dados filtrados, se necessário
       function criarLinhasTabela(dadosFiltrados, tabelaId) {
                     const tabela = document.getElementById(tabelaId);
                     const tbody = tabela.querySelector('tbody');
@@ -425,13 +374,14 @@
       }
     }
     
-
+    
     function getExtrato() {
         let tabelas = document.getElementsByClassName('tabelass');
         let tabela_filtro = document.getElementById('resposta');
-
-
-
+        
+        limparTabelas()
+        
+        document.getElementById('filtros').innerHTML = '<p style="margin-left: 1%; margin-right: 1%">Filtros: </p>';
         controlExibicao("Consultando");
         $.ajax({
                 url: "http://consigconsult.us-east-1.elasticbeanstalk.com/api/extrato?cpf="+$( "#cpf" ).val().replace(/([^\d])+/gim, ''),
@@ -444,22 +394,48 @@
 
 
                   //filtro botoes
-                  const dados_local = JSON.stringify(dados.consignacoes)
-                  console.log(dados_local)
-                  localStorage.setItem("dados", dados_local);
+                  const dados_local_1 = JSON.stringify(dados.consignacoes)
+                  console.log(dados_local_1)
+                  localStorage.setItem("dados", dados_local_1);
 
                   const situacoesUnicas = [...new Set(dados.consignacoes.map(item => item.situacao))];
+                  
+                    
 
                   situacoesUnicas.forEach(situacao => {
-                    const button = document.createElement("button");
+                      var dados_local = JSON.parse(localStorage.getItem("dados"));
+
+                    // Verificar se os dados foram recuperados com sucesso
+                    if (dados_local) {
+                        // Extrair as situações únicas dos dados
+                        const situacoesUnicas = [...new Set(dados_local.map(item => item.situacao))];
+                    
+                        // Criar um objeto para armazenar a contagem de cada situação única
+                        const contagemSituacoes = situacoesUnicas.reduce((acc, situacao) => {
+                            // Contar as ocorrências da situação atual nos dados
+                            const contagem = dados_local.filter(item => item.situacao === situacao).length;
+                            // Armazenar a contagem no objeto
+                            acc[situacao] = contagem;
+                            return acc;
+                        }, {});
+                    
+                        // Exibir a contagem de cada situação única
+                        console.log(JSON.stringify(contagemSituacoes));
+                        const button = document.createElement("button");
+                    const span = document.createElement("span");
+                    span.className += "badge bg-secondary  ml-1";
+                    span.textContent = contagemSituacoes[situacao];
                     button.textContent = situacao;
                     button.className += "btn btn-primary";
                     if (situacao === 'Cancelada') {
                       button.className += 'btn btn-danger';
                     }
+                    button.appendChild(span);
                     button.style.marginRight = "1.6%";
                     button.addEventListener("click", () => filtrarPorSituacao(situacao));
                     document.getElementById('filtros').appendChild(button);
+                    }
+                    
                   });
 
                   const button = document.createElement("button");
@@ -487,6 +463,7 @@
 
                       tbody.appendChild(linha);
                     });
+                    
                   }
                   
                    criarLinhasTabela(dados.dadosServidores, 'tabelaServidores');
@@ -528,10 +505,11 @@
 
         else if(contains == false){
         $('#consulta').removeClass("btn-secondary").attr("disabled", false).html("Consultar");
-           
-            
+          
         }
+        
     }
+
 </script>
 </body>
 
